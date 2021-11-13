@@ -6,14 +6,25 @@ const dbmanager = require('./database')
 app.set('view engine', 'ejs')
 
 app.use('/meals', mealsRouter)
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    const ingredients = [{
-        name: 'Test',
-        category: 'category'
-    }];
-    res.render('index', { ingredients: ingredients})
-    //res.send('Hello World')
+    let db = dbmanager.openDB();
+    db.then(
+        (openeddb) => { 
+            let ingredients = dbmanager.getAllIngredients(openeddb)
+            ingredients.then(
+                (result) => {
+                    res.render('index', { ingredients: result})
+            }).finally( 
+                () => {
+                    dbmanager.closeDB(openeddb)
+            }) 
+        },
+        (error) => { 
+            console.log(error);
+        }
+    );
 })
 
 app.listen(5000)

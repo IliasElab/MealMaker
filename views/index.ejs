@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
     
     <title>MealMaker</title>
 </head>
@@ -14,8 +13,15 @@
     <h1>Welcome on MealMaker</h1>
     <p>Enter what ingredients you have to see what meals you can make with !</p>
 
-    <p><%= ingredients[0].name %></p>
+    <div class ='container'>
+        <select id="type">
+            <option>-- Choose a category of Ingredient --</option>
 
+            <% [...new Set(ingredients.map(item => item.category))].forEach((item) => { %>
+                <option><%= item %></option>
+            <% }) %>
 
+        </select>
+    </div>
 </body>
 </html>
