@@ -56,6 +56,7 @@ module.exports = {
           allingredients = []
           rows.forEach(row => {
             ingredient = {
+              id: row.id,
               name: row.name,
               category: row.cat_name
             }

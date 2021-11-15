@@ -5,8 +5,8 @@ const dbmanager = require('./database')
 
 app.set('view engine', 'ejs')
 
-app.use('/meals', mealsRouter)
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: false}))
 
 app.get('/', (req, res) => {
     let db = dbmanager.openDB();
@@ -26,5 +26,7 @@ app.get('/', (req, res) => {
         }
     );
 })
+
+app.use('/meals', mealsRouter)
 
 app.listen(5000)
