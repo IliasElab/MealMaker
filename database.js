@@ -39,14 +39,14 @@ module.exports = {
       MongoClient.connect(url, function(err, db) {
         if (err) reject(err);
         var dbo = db.db("MealMaker");
-
-        var query = { ingredients: {ingredients} };
+        if (typeof ingredients === 'string'){
+          ingredients = [ingredients]
+        }
+        var query = { "ingredient.name": {$in : ingredients}  };
         console.log(query)
-        dbo.collection("recipes").find(query, function(err, result) {
-          if (err) reject(err);
-          db.close();
-          console.log(result)
-          //resolve(result)
+        dbo.collection("recipes").find(query).toArray(function(err, result) {
+            db.close();
+            resolve(result)
         });
       });
     });
