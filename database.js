@@ -34,19 +34,20 @@ module.exports = {
     });
   }
 ,
-  Mongo_GetMatchingRecipes: function(ingredients){
+  Mongo_GetMatchingRecipes: function(req){
     return new Promise((resolve, reject) => {
       MongoClient.connect(url, function(err, db) {
         if (err) reject(err);
         var dbo = db.db("MealMaker");
-        if (typeof ingredients === 'string'){
-          ingredients = [ingredients]
+        if (typeof req.ingredients === 'string'){
+          req.ingredients = [req.ingredients]
         }
-        var query = { "ingredient.name": {$in : ingredients}  };
-        console.log(query)
+        var query = { "ingredient.name": {$in : req.ingredients} };
+        //var query = { ingredient: { $elemMatch: { name: {$in : req.ingredients}, amount: { $gte: 8 } } } }
         dbo.collection("recipes").find(query).toArray(function(err, result) {
-            db.close();
-            resolve(result)
+          if (err) reject(err);
+          db.close();
+          resolve(result)
         });
       });
     });

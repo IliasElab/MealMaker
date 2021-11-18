@@ -9,8 +9,8 @@ router.get('/', (req, res) => {
 })
 */
 router.post('/', (req, res) => {
-    console.log(req.body)
-    let recipes = dbmanager.Mongo_GetMatchingRecipes(req.body.ingredients);
+    //console.log(req.body)
+    let recipes = dbmanager.Mongo_GetMatchingRecipes(req.body);
     recipes.then((result) => { 
         res.render('recommended.ejs', { recipes: result })
     })
