@@ -17,7 +17,9 @@ document.addEventListener('DOMContentLoaded', function(){
         //Foreach ingredients of the type selected, adding an option for this ingredient
         ingredient_by_type.forEach(element => {
             let item = document.createElement('button');
-            item.class = 'item';
+            item.type = 'button';
+            item.className= "btn btn-success btn-sm";
+            item.textContent = "+";
 
             //Cannot add Event listener normally on dynamically created element
             //So added it during the creation of the element
@@ -31,8 +33,10 @@ document.addEventListener('DOMContentLoaded', function(){
                     let container = document.createElement('div');
                     container.id = element.id;
 
-                    let deleter = document.createElement('input');
-                    deleter.type = 'radio';
+                    let deleter = document.createElement('button');
+                    deleter.type = 'button';
+                    deleter.className= "btn btn-danger btn-sm";
+                    deleter.textContent = "-";
 
                     let label_name = document.createElement('label');
                     label_name.for = element.name;
@@ -57,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     unit.id = 'unit_' + element.name;
                     unit.name = 'units';
 
-                    deleter.addEventListener('change', () => {
+                    deleter.addEventListener('click', () => {
                         container.remove(); 
                     });
 
