@@ -1,6 +1,8 @@
 const units = ['g', 'Nb', 'tbsp', 'cl']
 
+
 document.addEventListener('DOMContentLoaded', function(){
+
 
     let type = document.querySelector('#type');
     type.addEventListener('change', () => {
@@ -85,7 +87,8 @@ document.addEventListener('DOMContentLoaded', function(){
         type.parentNode.appendChild(new_ingredient);
     });
 
-    let form = document.querySelector("#form_ingredient")
+
+/*
     form.addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -95,8 +98,6 @@ document.addEventListener('DOMContentLoaded', function(){
         let units = Array.from(document.getElementsByName("units"));
 
         let i = 0;
-
-        //console.log(ingredients)
 
         amounts.forEach(quantity => {
             if (quantity.value == "" || !quantity.value.match(/^[0-9]+$/)){
@@ -110,7 +111,56 @@ document.addEventListener('DOMContentLoaded', function(){
                 i = i + 1;
             }
         });
-        console.log(dict)
+
+        let dictinput = document.createElement("input");
+        dictinput.value = JSON.stringify(dict);
+        dictinput.name = "ingredients";
+        dictinput.setAttribute("type", "hidden");
+
+        console.log(dictinput.value)
+
+        form.appendChild(dictinput);
+
+        form.submit();
+          // Reset all form data
+        //return false; // Prevent page refresh
     });
+    */
 });
+
+function formsubmission(){
+    var dict = [];
+    let ingredients = Array.from(document.getElementsByName("ingredients"));
+    let amounts = document.getElementsByName("quantities");
+    let units = Array.from(document.getElementsByName("units"));
+
+    let i = 0;
+
+    amounts.forEach(quantity => {
+        if (quantity.value == "" || !quantity.value.match(/^[0-9]+$/)){
+            throw new Error();
+        } else {
+            dict.push({
+                ingredient: ingredients[i].value,
+                amount: quantity.value,
+                unit: units[i].value
+            });
+            i = i + 1;
+        }
+    });
+
+    let form = document.querySelector("#form_ingredient")
+
+    let dictinput = document.createElement("input");
+    dictinput.value = JSON.stringify(dict);
+    dictinput.name = "ingredients";
+    dictinput.setAttribute("type", "hidden");
+
+    console.log(dictinput.value)
+
+    form.appendChild(dictinput);
+
+    form.submit();
+    form.removeChild(dictinput);
+}
 

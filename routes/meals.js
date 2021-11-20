@@ -9,11 +9,13 @@ router.get('/', (req, res) => {
 })
 */
 router.post('/', (req, res) => {
-    //console.log(req.body)
-    let recipes = dbmanager.Mongo_GetMatchingRecipes(req.body);
+    console.log(req.body.ingredients);
+    res.render('recommended.ejs',  { recipes: ["result", "test"] })
+    //res.render('recommended.ejs')
+    /*let recipes = dbmanager.Mongo_GetMatchingRecipes(req.body.ingredients);
     recipes.then((result) => { 
         res.render('recommended.ejs', { recipes: result })
-    })
+    })*/
 })
 
 module.exports = router

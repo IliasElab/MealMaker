@@ -31,13 +31,14 @@
         </select>
         
         <div id="ingredient" style="display: none;"></div>
+
         
-        <form id="form_ingredient" action="/meals" method="post">
-            <div id="saved_ingredient" style="display: flex; flex-direction: column;"></div>
-            <br />
-        
-            <input type="submit" value="Search">
+        <div id="saved_ingredient" style="display: flex; flex-direction: column;"></div>       
+
+        <form id="form_ingredient" action="/meals" method="post"> 
         </form>
+
+        <input type="button" value="Search" onclick="formsubmission()">
     </div>
 </body>
 </html>
