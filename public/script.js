@@ -156,8 +156,6 @@ function formsubmission(){
     dictinput.name = "ingredients";
     dictinput.setAttribute("type", "hidden");
 
-    console.log(dictinput.value)
-
     form.appendChild(dictinput);
 
     form.submit();

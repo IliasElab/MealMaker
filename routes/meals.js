@@ -3,19 +3,11 @@ const router = express.Router()
 const dbmanager = require('../database')
 
 //Every routes here is relative to the path localhost/meals/
-/*
-router.get('/', (req, res) => {
-    res.render('recommended.ejs')
-})
-*/
 router.post('/', (req, res) => {
-    console.log(req.body.ingredients);
-    res.render('recommended.ejs',  { recipes: ["result", "test"] })
-    //res.render('recommended.ejs')
-    /*let recipes = dbmanager.Mongo_GetMatchingRecipes(req.body.ingredients);
-    recipes.then((result) => { 
+    let recipes = dbmanager.Mongo_GetMatchingRecipes(JSON.parse(req.body.ingredients));
+    recipes.then((result) => {
         res.render('recommended.ejs', { recipes: result })
-    })*/
-})
+    })
+});
 
 module.exports = router

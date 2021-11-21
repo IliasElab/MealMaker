@@ -39,16 +39,35 @@ module.exports = {
       MongoClient.connect(url, function(err, db) {
         if (err) reject(err);
         var dbo = db.db("MealMaker");
-        if (typeof req.ingredients === 'string'){
-          req.ingredients = [req.ingredients]
-        }
-        var query = { "ingredient.name": {$in : req.ingredients} };
-        //var query = { ingredient: { $elemMatch: { name: {$in : req.ingredients}, amount: { $gte: 8 } } } }
-        dbo.collection("recipes").find(query).toArray(function(err, result) {
+
+        list_of_ing =  []
+
+        req.forEach(item => {
+          dico = {
+            "ingredient":{
+              "$elemMatch": {
+                "name": item.ingredient,
+                "amount" : {'$lte' : parseInt(item.amount)}
+              }
+            }
+          }
+
+          list_of_ing.push(dico)
+        })
+        var query = [
+          {
+            '$match': {
+              '$and': list_of_ing
+            }
+          }
+        ]
+        console.log(JSON.stringify(query))
+
+        dbo.collection("recipes").aggregate(query).toArray(function(err, result) {
           if (err) reject(err);
           db.close();
           resolve(result)
-        });
+        })
       });
     });
   }
