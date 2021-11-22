@@ -42,27 +42,41 @@ module.exports = {
 
         list_of_ing =  []
 
-        req.forEach(item => {
-          dico = {
-            "ingredient":{
-              "$elemMatch": {
-                "name": item.ingredient,
-                "amount" : {'$lte' : parseInt(item.amount)}
+        if (req.length > 0) {
+          req.forEach(item => {
+            dico = {
+              "ingredient":{
+                "$elemMatch": {
+                  "name": item.ingredient.toLowerCase(),
+                  "amount" : {'$lte' : parseInt(item.amount)}
+                }
               }
-            }
-          }
+            };
+            list_of_ing.push(dico);
+          });
+        }
 
-          list_of_ing.push(dico)
-        })
-        var query = [
-          {
-            '$match': {
-              '$and': list_of_ing
-            }
-          }
-        ]
-        console.log(JSON.stringify(query))
-
+        console.log(req.length == 1)
+        switch(req.length){
+          case 0:
+            return resolve([])
+          case 1:
+            var query = [
+              {
+                '$match': list_of_ing[0]
+              }
+            ]
+            break;
+          default:
+            var query = [
+              {
+                '$match': {
+                  '$and': list_of_ing
+                }
+              }
+            ]
+        }
+        
         dbo.collection("recipes").aggregate(query).toArray(function(err, result) {
           if (err) reject(err);
           db.close();
