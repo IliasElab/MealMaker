@@ -1,5 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 var MongoClient = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectId; 
 const url = 'mongodb://localhost:27017/MealMaker'
 
 module.exports = {
@@ -22,7 +23,8 @@ module.exports = {
       MongoClient.connect(url, function(err, db) {
         if (err) reject(err);
         var dbo = db.db("MealMaker");
-        var query = { name: recipe };
+        var o_id = new ObjectId(recipe)
+        var query = { _id: o_id };
         console.log(query)
         dbo.collection("recipes").findOne(query, function(err, result) {
           if (err) reject(err);
@@ -56,7 +58,6 @@ module.exports = {
           });
         }
 
-        console.log(req.length == 1)
         switch(req.length){
           case 0:
             return resolve([])
@@ -76,7 +77,7 @@ module.exports = {
               }
             ]
         }
-        
+
         dbo.collection("recipes").aggregate(query).toArray(function(err, result) {
           if (err) reject(err);
           db.close();

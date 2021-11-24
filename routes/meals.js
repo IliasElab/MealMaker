@@ -10,4 +10,12 @@ router.post('/', (req, res) => {
     })
 });
 
+router.get('/:id', (req, res) => {
+    let recipe = dbmanager.Mongo_GetOneRecipe(req.params.id);
+    recipe.then((result) => {
+        console.log(result)
+        res.render('recipe.ejs', { recipe: result })
+    })
+})
+
 module.exports = router
