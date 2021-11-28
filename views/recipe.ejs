@@ -18,7 +18,17 @@
 <body>
     <div class="container">
         <h3><%= recipe.title %></h3>
+        <div>
+            <h6>All Ingredients</h6>
+            <% recipe.ingredient.forEach((item) => { %>
+                <% console.log(item.amount) %>
+                <% if (item.amount != 0) {%>
+                <p><% item.name + ' : ' + item.amount + ' ' + item.unit %></p>
+                <% } %>
+            <% }) %>
+        </div>
         <a href='/'>Home</a>
     </div>
 </body>
 </html>
+

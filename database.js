@@ -29,7 +29,6 @@ module.exports = {
         dbo.collection("recipes").findOne(query, function(err, result) {
           if (err) reject(err);
           db.close();
-          console.log(result)
           resolve(result)
         });
       });

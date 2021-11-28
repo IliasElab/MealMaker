@@ -18,7 +18,7 @@
 <body>
     <div class="container">
         <% recipes.forEach((recipe) => { %>
-            <a href="meals/<%= recipe._id %>"><%= recipe.title %></a>
+            <h3><a href="meals/<%= recipe._id %>"><%= recipe.title %></a></h3>
         <% }) %>
         
     </div>
