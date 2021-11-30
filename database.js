@@ -25,7 +25,6 @@ module.exports = {
         var dbo = db.db("MealMaker");
         var o_id = new ObjectId(recipe)
         var query = { _id: o_id };
-        console.log(query)
         dbo.collection("recipes").findOne(query, function(err, result) {
           if (err) reject(err);
           db.close();
@@ -35,16 +34,50 @@ module.exports = {
     });
   }
 ,
-  Mongo_GetMatchingRecipes: function(req){
+  Mongo_GetMatchingRecipes: function(body){
     return new Promise((resolve, reject) => {
       MongoClient.connect(url, function(err, db) {
         if (err) reject(err);
         var dbo = db.db("MealMaker");
 
+        var dict = [];
+        let ingredients = body.ingredients;
+        let amounts = body.quantities;
+        let units = body.units;
+
+        if (typeof ingredients === 'undefined' || typeof amounts === 'undefined' || typeof units === 'undefined'){
+          return resolve([])
+        }
+        else if (typeof ingredients === 'string' && typeof amounts === 'string' && typeof units === 'string') {
+          if (amounts == "" || !amounts.match(/^[0-9]+$/)){
+            reject('The amount of ' + ingredients + ' is not a number')
+          }
+          dict.push({
+            ingredient: ingredients,
+            amount: parseInt(amounts),
+            unit: units
+          });
+
+        } else {
+          let i = 0;
+          amounts.forEach(quantity => {
+            if (quantity == "" || !quantity.match(/^[0-9]+$/)){
+              reject('The quantity of ' + ingredients[i] + ' is not a number')
+            } else {
+              dict.push({
+                  ingredient: ingredients[i],
+                  amount: parseInt(quantity),
+                  unit: units[i]
+              });
+              i = i + 1;
+            }
+          });
+        }
+        
         list_of_ing =  []
 
-        if (req.length > 0) {
-          req.forEach(item => {
+        if (dict.length > 0) {
+          dict.forEach(item => {
             dico = {
               "ingredient":{
                 "$elemMatch": {
@@ -57,7 +90,7 @@ module.exports = {
           });
         }
 
-        switch(req.length){
+        switch(dict.length){
           case 0:
             return resolve([])
           case 1:
