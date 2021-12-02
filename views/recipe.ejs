@@ -23,17 +23,28 @@
 
     <%- include("navbar.ejs") %>
     <div class="container">
-        <h3><%= recipe.title %></h3>
+        <h2><%= recipe.title %></h2>
         <div>
-            <h6>All Ingredients</h6>
-            <% recipe.ingredient.forEach((item) => { %>
-                <% if (item.amount != 0 && item.unit != "number") {%>
-                    <p><%= item.name + ' : ' + item.amount + ' ' + item.unit %></p>
-                <% } else if (item.amount != 0 && item.unit == "number") { %>
-                    <p><%= item.name + ' : ' + item.amount %></p> 
-                <% } else { %>
-                    <p><%= item.name %></p> 
-            <% }}) %>
+            <h4>All Ingredients</h4>
+            <ul>
+                <% recipe.ingredient.forEach((item) => { %>
+                    <% if (item.amount != 0 && item.unit != "number") {%>
+                        <li><%= item.name.charAt(0).toUpperCase() + item.name.slice(1) + ' : ' + item.amount + ' ' + item.unit %></li>
+                    <% } else if (item.amount != 0 && item.unit == "number") { %>
+                        <li><%= item.name.charAt(0).toUpperCase() + item.name.slice(1) + ' : ' + item.amount %></li> 
+                    <% } else { %>
+                        <li><%= item.name.charAt(0).toUpperCase() + item.name.slice(1) %></li> 
+                <% }}) %>
+            </ul>
+
+            <h4>Preparation</h4>     
+            <ul>
+                <% recipe.step.split('.').forEach((step) => { %>
+                    <% if (step.trim().length) {%>
+                        <li><%= step %></li>
+                <% }}) %>
+            </ul> 
+            <img src="/images/<%= recipe._id %>.jpg" alt="" height="400" width="400">       
         </div>
         <a href='/'>Home</a>
     </div>
