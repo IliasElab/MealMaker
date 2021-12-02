@@ -34,6 +34,24 @@ module.exports = {
     });
   }
 ,
+  Mongo_ByCategories: function(body){
+    return new Promise((resolve, reject) => {
+      MongoClient.connect(url, function(err, db) {
+        if (err) reject(err);
+        var dbo = db.db("MealMaker");
+        if (body.includes("_")){
+          body = body.split('_').join(' ')
+        }
+        var query = { category: body };
+        dbo.collection("recipes").find(query).toArray(function(err, result) {
+          if (err) reject(err);
+          db.close();
+          resolve(result)
+        });
+      });
+    });
+  }
+,
   Mongo_GetMatchingRecipes: function(body){
     return new Promise((resolve, reject) => {
       MongoClient.connect(url, function(err, db) {
