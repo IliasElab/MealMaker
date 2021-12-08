@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function(){
         ingredient_by_type.forEach(element => {
             let item = document.createElement('button');
             item.type = 'button';
-            item.className= "btn btn-success btn-sm";
             item.textContent = "+";
 
             //Cannot add Event listener normally on dynamically created element
@@ -36,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
                     let deleter = document.createElement('button');
                     deleter.type = 'button';
-                    deleter.className= "btn btn-danger btn-sm";
                     deleter.textContent = "-";
 
                     let label_name = document.createElement('label');
