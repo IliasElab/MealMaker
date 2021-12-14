@@ -8,23 +8,21 @@ app.set('view engine', 'ejs')
 app.use(express.static(__dirname+ '/public'));
 app.use(express.urlencoded({ extended: false}))
 
+async function indexFct(){
+    try {
+        await dbmanager.openDB();
+        let ingredients = await dbmanager.getAllIngredients(openeddb)
+        return ingredients
+    } catch (error) {
+        console.log(error);
+    } finally {
+        dbmanager.closeDB(openeddb)
+    }
+}
+
 app.get('/', (req, res) => {
-    let db = dbmanager.openDB();
-    db.then(
-        (openeddb) => { 
-            let ingredients = dbmanager.getAllIngredients(openeddb)
-            ingredients.then(
-                (result) => {
-                    res.render('index', { ingredients: result})
-            }).finally( 
-                () => {
-                    dbmanager.closeDB(openeddb)
-            }) 
-        },
-        (error) => { 
-            console.log(error);
-        }
-    );
+    let data = indexFct();
+    res.render('index', { ingredients: data})
 })
 
 app.use('/meals', mealsRouter)
