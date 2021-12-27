@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Recipe from './Recipe';
 
 const ListRecipes = () => {
     const [data, setData] = useState([]);
     const [selectedType, setSelectedType] = useState('');
+    const [selectedRecipe, setSelectedRecipe] = useState('');
     const recipeTypes = ["Cakes", "Pies", "Cookies", "Salads and Dressings"];
 
     useEffect(() => {
         axios.get('http://localhost:5000/meals/all')
         .then((result) => {
-            console.log(result);
-            //setData(result.data);
-        }) 
+            setData(result.data);
+        })
     }, []);
 
     return (
@@ -29,6 +30,17 @@ const ListRecipes = () => {
             <div className="cancel">
                 {selectedType && <button onClick={() => setSelectedType("")}>All Recipes</button>}
             </div>
+
+            {selectedRecipe === "" && <ul className="filtered-recipes">
+                {data.filter((recipe) => recipe.category.includes(selectedType)).map((recipe) => (
+                    <button className="recipe" key={recipe.title} onClick={() => 
+                        setSelectedRecipe(recipe._id)
+                    }>{recipe.title}</button> 
+                ))}
+            </ul>}
+
+            {selectedRecipe !== "" && <Recipe recipe={data.find((recipe) => recipe._id === selectedRecipe)} key={selectedRecipe}/>}
+
         </div>
         
     );

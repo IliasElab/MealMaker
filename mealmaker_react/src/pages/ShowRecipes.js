@@ -7,7 +7,6 @@ const ShowRecipes = () => {
         <div>
             <Navigation />
             <ListRecipes />
-            <h3>Je suis le component ShowRecipes</h3>
         </div>
     );
 };
