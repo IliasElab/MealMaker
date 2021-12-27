@@ -7,7 +7,7 @@ router.post('/', (req, res) => {
     console.log(req.body)
     let recipes = dbmanager.Mongo_GetMatchingRecipes(req.body);
     recipes.then((result) => {
-        res.render('recommended.ejs', { recipes: result })
+        res.status(200).send(result)
     }).catch(err => {
         res.status(500).send(err);
     })
@@ -16,7 +16,9 @@ router.post('/', (req, res) => {
 router.get('/all', (req, res) => {
     let recipes = dbmanager.Mongo_GetAllRecipes();
     recipes.then((result) => {
-        res.render('recommended.ejs', { recipes: result })
+        res.status(200).send(JSON.stringify(result))
+    }).catch(err => {
+        res.status(500).send(err);
     })
 })
 
