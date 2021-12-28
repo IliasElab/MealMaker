@@ -8,6 +8,12 @@ app.set('view engine', 'ejs')
 app.use(express.static(__dirname+ '/public'));
 app.use(express.urlencoded({ extended: false}))
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});  
+
 app.get('/', (req, res) => {
     let indexFct = async function() {
         let open_DB = await dbmanager.openDB();
@@ -24,15 +30,12 @@ app.get('/', (req, res) => {
 
     indexFct().then((data) => {
         if (data != false){
-            res.render('index', { ingredients: data});
+            res.status(200).send(data)
+            //res.render('index', { ingredients: data});
         }
     })
 })
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});     
+   
   
 app.use('/meals', mealsRouter)
 

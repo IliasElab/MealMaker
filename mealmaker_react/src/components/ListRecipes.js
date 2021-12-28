@@ -21,21 +21,20 @@ const ListRecipes = () => {
                 {recipeTypes.map((type) => {
                     return(
                         <li key={type}>
-                            <input type="radio" value={type} id={type} checked={type === selectedType} onChange={(e) => setSelectedType(e.target.value)}/>
+                            <input type="radio" value={type} id={type} checked={type === selectedType} onChange={(e) => {setSelectedType(e.target.value); setSelectedRecipe("");}}/>
                             <label htmlFor={type}>{type}</label>
                         </li>
                     )
                 })}
             </ul>
             <div className="cancel">
-                {selectedType && <button onClick={() => setSelectedType("")}>All Recipes</button>}
+                {selectedType && <button onClick={() => {setSelectedType(""); setSelectedRecipe("");}}>All Recipes</button>}
             </div>
 
             {selectedRecipe === "" && <ul className="filtered-recipes">
                 {data.filter((recipe) => recipe.category.includes(selectedType)).map((recipe) => (
-                    <button className="recipe" key={recipe.title} onClick={() => 
-                        setSelectedRecipe(recipe._id)
-                    }>{recipe.title}</button> 
+                    <button className="recipe" key={recipe.title} onClick={() => {setSelectedRecipe(recipe._id); setSelectedType("recipe-selected");
+                    }}>{recipe.title}</button> 
                 ))}
             </ul>}
 

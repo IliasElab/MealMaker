@@ -23,7 +23,7 @@ const Recipe = (props) => {
                         }
                         return (
                         <li key={ingredient.name}>{showedIngredient}</li>
-                        ) 
+                        )
                     })}
                 </ul>  
 
@@ -31,9 +31,9 @@ const Recipe = (props) => {
                 <ul>
                     {recipe.step.split('.').map((step) => {
                         if (step.trim().length) {
-                            return(<li>{step}</li>)
+                            return(<li>{step}</li>);
                         }
-                        return ""
+                        return "";
                     })}
                 </ul> 
                 <img src={"/images/" + recipe._id + ".jpg"} alt="No pictures available" height="400" width="400"/>   
