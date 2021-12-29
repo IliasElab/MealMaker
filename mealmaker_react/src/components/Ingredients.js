@@ -1,10 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import Ingredient from './Ingredient';
+
+const listReducer = (state, action) => {
+    switch (action.type) {
+        case 'ADD_ITEM':
+            if (!state.includes(action.ingredient)){
+                return [...state, action.ingredient ];
+            }     
+            return state
+        case 'REMOVE_ITEM':
+            return state.filter((ingredient) => ingredient.id === action.ingredient.id)
+        default:
+            throw new Error();
+    }
+};
 
 const Ingredients = () => {
     const [data, setData] = useState([]);
     const [category, setCategory] = useState('');
+    const [selectedIngredient, dispatchSelectedIngredient] = useReducer(listReducer, []);
 
     useEffect(() => {
         axios.get('http://localhost:5000/')
@@ -26,11 +41,13 @@ const Ingredients = () => {
 
             <div className="selector-ingredients">
                 {data.filter((ingredient) => ingredient.category === category).map((ingredient) => (
-                    <Ingredient ingredient={ingredient} key={ingredient.name}/>
+                    <button key={ingredient.name} onClick={() => dispatchSelectedIngredient({ type: 'ADD_ITEM', ingredient: ingredient})} className="ingredient"><Ingredient ingredient={ingredient}/></button> 
                 ))}
             </div>
             
-            <div className="selected-ingredients"></div>
+            <div className="selected-ingredients">
+                {selectedIngredient.map((ingredient) => ingredient.name)}
+            </div>
             
         </div>
     );
