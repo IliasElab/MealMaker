@@ -10,7 +10,9 @@ const listReducer = (state, action) => {
             }     
             return state
         case 'REMOVE_ITEM':
-            return state.filter((ingredient) => ingredient.id === action.ingredient.id)
+            return state.filter((ingredient) => ingredient.id !== action.remove_id);
+        case 'EMPTY_ITEM':
+            return [];
         default:
             throw new Error();
     }
@@ -41,12 +43,17 @@ const Ingredients = () => {
 
             <div className="selector-ingredients">
                 {data.filter((ingredient) => ingredient.category === category).map((ingredient) => (
-                    <button key={ingredient.name} onClick={() => dispatchSelectedIngredient({ type: 'ADD_ITEM', ingredient: ingredient})} className="ingredient"><Ingredient ingredient={ingredient}/></button> 
+                    <button key={ingredient.name} onClick={() => dispatchSelectedIngredient({ type: 'ADD_ITEM', ingredient: ingredient})} className="btn-ingredient">{ingredient.name}</button> 
                 ))}
             </div>
             
             <div className="selected-ingredients">
-                {selectedIngredient.map((ingredient) => ingredient.name)}
+                {selectedIngredient.map((ingredient) =>
+                    <Ingredient key={ingredient.name} ingredient={ingredient} change={dispatchSelectedIngredient}/>
+                )}
+
+                
+            {selectedIngredient.length !== 0 && <button onClick={() => dispatchSelectedIngredient({type: 'EMPTY_ITEM'})} className='delete-all'>Empty list</button>}
             </div>
             
         </div>
