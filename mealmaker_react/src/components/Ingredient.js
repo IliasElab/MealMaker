@@ -6,18 +6,15 @@ const Ingredient = (props) => {
     
     return (
         <div className="selected-ingredient">
-            <button  onClick={() => props.change({ type: 'REMOVE_ITEM', remove_id: ingredient.id })}>-</button>
-            <input type="number" className="ingredient"></input>
-            <select name="" id="">
-                <option>-- Choose a Unit --</option>
+            <button onClick={() => props.change({ type: 'REMOVE_ITEM', remove_id: ingredient.id })}>-</button>
+            <label>{ingredient.name}</label>
+            <input required onChange={(e) => props.change({ type: 'MODIFY_AMOUNT_ITEM', modify_id: ingredient.id, amount: e.target.value })} placeholder='0' min="1" type="number" className="ingredient" name="amount"></input>
+            <select onChange={(e) => props.change({ type: 'MODIFY_UNIT_ITEM', modify_id: ingredient.id, unit: e.target.value })} name="unit" id="">
                 {units.map((unit) => {
-                    return (<option key={ingredient.name + '-' + unit}>{unit}</option>)
+                    return (<option value={unit} key={ingredient.name + '-' + unit}>{unit}</option>)
                 })}
             </select>
         </div>
-
-
-
     );
 };
 

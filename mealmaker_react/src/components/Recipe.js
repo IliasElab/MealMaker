@@ -29,9 +29,9 @@ const Recipe = (props) => {
 
                 <h4>Preparation</h4>     
                 <ul>
-                    {recipe.step.split('.').map((step) => {
+                    {recipe.step.split('.').map((step, i) => {
                         if (step.trim().length) {
-                            return(<li>{step}</li>);
+                            return(<li key={"step" + i}>{step}</li>);
                         }
                         return "";
                     })}

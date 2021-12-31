@@ -1,16 +1,39 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import Ingredient from './Ingredient';
+import { NavLink } from 'react-router-dom';
+
+const units = ['g', 'Nb', 'tbsp', 'cl'];
 
 const listReducer = (state, action) => {
+    let updated;
     switch (action.type) {
         case 'ADD_ITEM':
-            if (!state.includes(action.ingredient)){
-                return [...state, action.ingredient ];
-            }     
+            if(state.find((elem) => elem.id === action.ingredient.id) === undefined){
+                const ing = {...action.ingredient, amount: NaN, unit: 'g'};
+                return [...state, ing ];
+            }
             return state
         case 'REMOVE_ITEM':
             return state.filter((ingredient) => ingredient.id !== action.remove_id);
+        case 'MODIFY_AMOUNT_ITEM':
+            updated = state.map((ing) => {
+                if (ing.id === action.modify_id){
+                    if (action.amount > 0)
+                        return {...ing, "amount": parseInt(action.amount)}
+                    else 
+                        {return {...ing, "amount": NaN}}
+                }
+                else {return ing}
+            });
+            return updated
+        case 'MODIFY_UNIT_ITEM':
+            updated = state.map((ing) => {
+                if (ing.id === action.modify_id && units.includes(action.unit))
+                    return {...ing, "unit": action.unit}
+                return ing
+            });
+            return updated
         case 'EMPTY_ITEM':
             return [];
         default:
@@ -54,6 +77,8 @@ const Ingredients = () => {
 
                 
             {selectedIngredient.length !== 0 && <button onClick={() => dispatchSelectedIngredient({type: 'EMPTY_ITEM'})} className='delete-all'>Empty list</button>}
+            {selectedIngredient.length !== 0 && selectedIngredient.every((ing) => !isNaN(ing.amount)) && <NavLink to={{pathname: "/recipes", data:selectedIngredient}}>Fit Recipes</NavLink>}
+
             </div>
             
         </div>
