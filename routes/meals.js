@@ -3,9 +3,17 @@ const router = express.Router()
 const dbmanager = require('../database')
 
 //Every routes here is relative to the path localhost/meals/
-router.post('/', (req, res) => {
-    console.log(req.body)
-    let recipes = dbmanager.Mongo_GetMatchingRecipes(req.body);
+//router.post('/', (req, res) => {
+router.get('/', (req, res) => {
+    let recipes;
+
+    if (Object.keys(req.query).length === 0){
+        recipes = dbmanager.Mongo_GetAllRecipes();
+    }
+    else{
+        const string_body = Object.keys(req.query).map((i) => req.query[i])
+        recipes = dbmanager.Mongo_GetMatchingRecipes(string_body); 
+    }
     recipes.then((result) => {
         res.status(200).send(result)
     }).catch(err => {

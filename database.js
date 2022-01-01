@@ -55,66 +55,33 @@ module.exports = {
   Mongo_GetMatchingRecipes: function(body){
     return new Promise((resolve, reject) => {
       MongoClient.connect(url, function(err, db) {
-        if (err) reject(err);
+        if (err || body.length === 0) reject(err);
         var dbo = db.db("MealMaker");
 
-        var dict = [];
-        let ingredients = body.ingredients;
-        let amounts = body.quantities;
-        let units = body.units;
-
-        if (typeof ingredients === 'undefined' || typeof amounts === 'undefined' || typeof units === 'undefined'){
-          return resolve([])
-        }
-        else if (typeof ingredients === 'string' && typeof amounts === 'string' && typeof units === 'string') {
-          if (amounts == "" || !amounts.match(/^[0-9]+$/)){
-            reject('The amount of ' + ingredients + ' is not a number')
+        var dict = body.map(ing => {
+          let ing_formatted = JSON.parse(ing);
+          if (ing_formatted.amount == "" || typeof ing_formatted.amount === 'string' ){
+            reject('The amount of ' + ing_formatted.name + ' is not a number')
           }
-          dict.push({
-            ingredient: ingredients,
-            amount: parseInt(amounts),
-            unit: units
-          });
 
-        } else {
-          let i = 0;
-          amounts.forEach(quantity => {
-            if (quantity == "" || !quantity.match(/^[0-9]+$/)){
-              reject('The quantity of ' + ingredients[i] + ' is not a number')
-            } else {
-              dict.push({
-                  ingredient: ingredients[i],
-                  amount: parseInt(quantity),
-                  unit: units[i]
-              });
-              i = i + 1;
-            }
-          });
-        }
-        
-        list_of_ing =  []
-
-        if (dict.length > 0) {
-          dict.forEach(item => {
-            dico = {
-              "ingredient":{
-                "$elemMatch": {
-                  "name": item.ingredient.toLowerCase(),
-                  "amount" : {'$lte' : parseInt(item.amount)}
-                }
+          dico = {
+            "ingredient":{
+              "$elemMatch": {
+                "name": ing_formatted.name.toLowerCase(),
+                "amount" : {'$lte' : parseInt(ing_formatted.amount)}
               }
-            };
-            list_of_ing.push(dico);
-          });
-        }
-
+            }
+          };
+          return dico;
+        })
+        
         switch(dict.length){
           case 0:
             return resolve([])
           case 1:
             var query = [
               {
-                '$match': list_of_ing[0]
+                '$match': dict[0]
               }
             ]
             break;
@@ -122,7 +89,7 @@ module.exports = {
             var query = [
               {
                 '$match': {
-                  '$and': list_of_ing
+                  '$and': dict
                 }
               }
             ]

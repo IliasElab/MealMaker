@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Recipe from './Recipe';
+import { useLocation } from 'react-router-dom';
 
 const ListRecipes = () => {
+    const { state } = useLocation();
     const [data, setData] = useState([]);
     const [selectedType, setSelectedType] = useState('');
     const [selectedRecipe, setSelectedRecipe] = useState('');
     const recipeTypes = ["Cakes", "Pies", "Cookies", "Salads and Dressings"];
 
     useEffect(() => {
-        axios.get('http://localhost:5000/meals/all')
-        .then((result) => {
-            setData(result.data);
-        })
+        if (state === null){
+            axios.get('http://localhost:5000/meals/all')
+            .then((result) => {
+                setData(result.data);
+            })
+        } else {
+            axios.get('http://localhost:5000/meals/', {params: state})
+            .then((result) => {
+                console.log(result)
+                setData(result.data);
+            })
+        }   
     }, []);
 
     return (

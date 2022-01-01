@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import Ingredient from './Ingredient';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const units = ['g', 'Nb', 'tbsp', 'cl'];
 
@@ -19,10 +19,16 @@ const listReducer = (state, action) => {
         case 'MODIFY_AMOUNT_ITEM':
             updated = state.map((ing) => {
                 if (ing.id === action.modify_id){
-                    if (action.amount > 0)
-                        return {...ing, "amount": parseInt(action.amount)}
-                    else 
-                        {return {...ing, "amount": NaN}}
+                    try {
+                        if (action.amount > 0)
+                            return {...ing, "amount": parseInt(action.amount)}
+                        else 
+                            {return {...ing, "amount": NaN}}
+                        
+                    } catch (error) {  
+                        console.log(error)
+                        {return ing}
+                    }
                 }
                 else {return ing}
             });
@@ -45,6 +51,7 @@ const Ingredients = () => {
     const [data, setData] = useState([]);
     const [category, setCategory] = useState('');
     const [selectedIngredient, dispatchSelectedIngredient] = useReducer(listReducer, []);
+    let navigate = useNavigate();
 
     useEffect(() => {
         axios.get('http://localhost:5000/')
@@ -77,7 +84,7 @@ const Ingredients = () => {
 
                 
             {selectedIngredient.length !== 0 && <button onClick={() => dispatchSelectedIngredient({type: 'EMPTY_ITEM'})} className='delete-all'>Empty list</button>}
-            {selectedIngredient.length !== 0 && selectedIngredient.every((ing) => !isNaN(ing.amount)) && <NavLink to={{pathname: "/recipes", data:selectedIngredient}}>Fit Recipes</NavLink>}
+            {selectedIngredient.length !== 0 && selectedIngredient.every((ing) => !isNaN(ing.amount)) && (<button onClick={() => navigate('/recipes', {state: selectedIngredient})}>Fit Recipes</button>)}
 
             </div>
             
