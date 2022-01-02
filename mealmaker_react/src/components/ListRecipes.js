@@ -4,6 +4,7 @@ import Recipe from './Recipe';
 import { useLocation } from 'react-router-dom';
 
 const ListRecipes = () => {
+    const [allRecipes, setAllRecipes] = useState(false);
     const { state } = useLocation();
     const [data, setData] = useState([]);
     const [selectedType, setSelectedType] = useState('');
@@ -11,7 +12,7 @@ const ListRecipes = () => {
     const recipeTypes = ["Cakes", "Pies", "Cookies", "Salads and Dressings"];
 
     useEffect(() => {
-        if (state === null){
+        if (state === null || allRecipes === true){
             axios.get('http://localhost:5000/meals/all')
             .then((result) => {
                 setData(result.data);
@@ -19,11 +20,10 @@ const ListRecipes = () => {
         } else {
             axios.get('http://localhost:5000/meals/', {params: state})
             .then((result) => {
-                console.log(result)
                 setData(result.data);
             })
         }   
-    }, []);
+    }, [allRecipes]);
 
     return (
         <div className="list-recipes">
@@ -38,7 +38,8 @@ const ListRecipes = () => {
                 })}
             </ul>
             <div className="cancel">
-                {selectedType && <button onClick={() => {setSelectedType(""); setSelectedRecipe("");}}>All Recipes</button>}
+                {selectedType && <button onClick={() => {setSelectedType(""); setSelectedRecipe("");}}>Reset Categories</button>}
+                {allRecipes === false && <button onClick={() => {setSelectedType(""); setSelectedRecipe(""); setAllRecipes(true)}}>All Recipes</button>}
             </div>
 
             {selectedRecipe === "" && <ul className="filtered-recipes">
