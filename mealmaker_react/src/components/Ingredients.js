@@ -49,7 +49,7 @@ const listReducer = (state, action) => {
 
 const Ingredients = () => {
     const [data, setData] = useState([]);
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState('Herbs and Spices');
     const [selectedIngredient, dispatchSelectedIngredient] = useReducer(listReducer, []);
     let navigate = useNavigate();
 
@@ -63,8 +63,6 @@ const Ingredients = () => {
     return (
         <div className ='page-ingredients'>
             <select id="type" onChange={((e) => setCategory(e.target.value))}>
-                <option>-- Choose a category of Ingredient --</option>
-
                 {[...new Set(data.map(ingredient => ingredient.category))].map((category) => {
                     return (<option key={category}>{category}</option>)
                 })}
@@ -81,13 +79,13 @@ const Ingredients = () => {
                 {selectedIngredient.map((ingredient) =>
                     <Ingredient key={ingredient.name} ingredient={ingredient} change={dispatchSelectedIngredient}/>
                 )}
-
-                
-            {selectedIngredient.length !== 0 && <button onClick={() => dispatchSelectedIngredient({type: 'EMPTY_ITEM'})} className='delete-all'>Empty list</button>}
-            {selectedIngredient.length !== 0 && selectedIngredient.every((ing) => !isNaN(ing.amount)) && (<button onClick={() => navigate('/recipes', {state: selectedIngredient})}>Fit Recipes</button>)}
-
             </div>
             
+            <div className="functionnal-btn">            
+                {selectedIngredient.length !== 0 && <button onClick={() => dispatchSelectedIngredient({type: 'EMPTY_ITEM'})} className='delete-all'>Empty List</button>}
+                {selectedIngredient.length !== 0 && selectedIngredient.every((ing) => !isNaN(ing.amount)) && (<button className='fit-recipes' onClick={() => navigate('/recipes', {state: selectedIngredient})}>Find Recipes</button>)}
+            </div>
+
         </div>
     );
 };

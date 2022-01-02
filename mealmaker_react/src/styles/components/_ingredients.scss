@@ -1,0 +1,43 @@
+.selector-ingredients {
+    button {
+        background-color: rgba(7, 134, 7, 0.726);
+        border: none;
+        border-radius: 5px;
+        color: white;
+        margin: 2px;
+    }
+}
+
+.selected-ingredients {
+    button {
+        height: 25px;
+        width: 25px;
+        background-color: rgba(216, 28, 28, 0.774);
+        border: none;
+        border-radius: 5px;
+        color: white;
+        margin: 2px;
+    }
+}
+
+.functionnal-btn {
+    .delete-all {
+        height: 25px;
+        width: 80px;
+        background-color: rgba(206, 11, 11, 0.89);
+        border: none;
+        border-radius: 5px;
+        color: white;
+        margin: 2px;
+    }
+
+    .fit-recipes {
+        height: 25px;
+        width: 100px;
+        background-color: rgba(21, 204, 36, 0.815);
+        border: none;
+        border-radius: 5px;
+        color: white;
+        margin: 2px;
+    }
+}
