@@ -4,8 +4,9 @@ import Recipe from './Recipe';
 import { useLocation } from 'react-router-dom';
 
 const ListRecipes = () => {
-    const [allRecipes, setAllRecipes] = useState(false);
+    
     const { state } = useLocation();
+    const [allRecipes, setAllRecipes] = useState(state === null ? true : false);
     const [data, setData] = useState([]);
     const [selectedType, setSelectedType] = useState('');
     const [selectedRecipe, setSelectedRecipe] = useState('');
@@ -27,7 +28,7 @@ const ListRecipes = () => {
 
     return (
         <div className="list-recipes">
-            <ul>
+            <ul className='categories'>
                 {recipeTypes.map((type) => {
                     return(
                         <li key={type}>
@@ -38,8 +39,8 @@ const ListRecipes = () => {
                 })}
             </ul>
             <div className="cancel">
-                {selectedType && <button onClick={() => {setSelectedType(""); setSelectedRecipe("");}}>Reset Categories</button>}
-                {allRecipes === false && <button onClick={() => {setSelectedType(""); setSelectedRecipe(""); setAllRecipes(true)}}>All Recipes</button>}
+                {selectedRecipe === "" && selectedType && <button onClick={() => {setSelectedType(""); setSelectedRecipe("");}}>Reset Categories</button>}
+                {(selectedRecipe !== "" || allRecipes === false) && <button onClick={() => {setSelectedType(""); setSelectedRecipe(""); setAllRecipes(true)}}>All Recipes</button>}
             </div>
 
             {selectedRecipe === "" && <ul className="filtered-recipes">
