@@ -29,7 +29,7 @@ const ListRecipes = () => {
     return (
         <div className="list-recipes">
             <ul className='categories'>
-                {recipeTypes.map((type) => {
+                {selectedRecipe === "" && recipeTypes.map((type) => {
                     return(
                         <li key={type}>
                             <input type="radio" value={type} id={type} checked={type === selectedType} onChange={(e) => {setSelectedType(e.target.value); setSelectedRecipe("");}}/>
