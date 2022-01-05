@@ -1,7 +1,13 @@
-.selected-ingredient{
+.selected-ingredient {
     margin: 2px;
-}
+    margin-top: 10px;
 
-.ingredient-amount {
-    width: 65px;
+    .ingredient-amount {
+        width: 65px;
+        height: 19px;
+    }
+    
+    .ingredient-select {
+        height: 25px;
+    }
 }

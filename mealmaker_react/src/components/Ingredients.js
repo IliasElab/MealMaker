@@ -62,7 +62,7 @@ const Ingredients = () => {
 
     return (
         <div className ='page-ingredients'>
-            <select id="type" onChange={((e) => setCategory(e.target.value))}>
+            <select className='select-category' id="type" onChange={((e) => setCategory(e.target.value))}>
                 {[...new Set(data.map(ingredient => ingredient.category))].map((category) => {
                     return (<option key={category}>{category}</option>)
                 })}
