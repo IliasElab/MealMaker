@@ -73,7 +73,7 @@ const Ingredients = () => {
                 })}
             </ul>
 
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 
             <div className="selector-ingredients">
                 {data.filter((ingredient) => ingredient.category === category).map((ingredient) => (
