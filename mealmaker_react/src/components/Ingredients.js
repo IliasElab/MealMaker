@@ -62,12 +62,18 @@ const Ingredients = () => {
 
     return (
         <div className ='page-ingredients'>
-            <select className='select-category' id="type" onChange={((e) => setCategory(e.target.value))}>
-                {[...new Set(data.map(ingredient => ingredient.category))].map((category) => {
-                    return (<option key={category}>{category}</option>)
+            <ul className='select-category'>
+                {[...new Set(data.map(ingredient => ingredient.category))].map((cat) => {
+                    return (
+                    <li key={cat}>
+                        <input type="radio" value={cat} id={cat} checked={cat === category} onChange={(e) => {setCategory(e.target.value)}}/>
+                        <label htmlFor={cat}><img height="50" width="50" src={"/images/Ingredient_Type/" + cat + ".svg"}/> <br/> {cat}</label>
+                    </li>
+                    )
                 })}
+            </ul>
 
-            </select>
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 
             <div className="selector-ingredients">
                 {data.filter((ingredient) => ingredient.category === category).map((ingredient) => (

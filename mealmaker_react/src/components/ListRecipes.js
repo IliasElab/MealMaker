@@ -33,7 +33,7 @@ const ListRecipes = () => {
                     return(
                         <li key={type}>
                             <input type="radio" value={type} id={type} checked={type === selectedType} onChange={(e) => {setSelectedType(e.target.value); setSelectedRecipe("");}}/>
-                            <label htmlFor={type}>{type}</label>
+                            <label htmlFor={type}><img height="45" width="45" src={"/images/" + type + ".svg"}/> <br/> {type}</label>
                         </li>
                     )
                 })}

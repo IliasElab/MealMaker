@@ -1,5 +1,18 @@
 .select-category {
     margin-bottom: 10px;
+
+    li {
+        float: left;
+        display: block;
+        color: black;
+        text-align: center;
+        padding: 16px;
+        text-decoration: none;
+
+        input {
+            display: none !important;
+        }
+    }
 }
 
 .selector-ingredients {
