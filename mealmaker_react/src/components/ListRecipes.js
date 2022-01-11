@@ -29,19 +29,27 @@ const ListRecipes = () => {
     return (
         <div className="list-recipes">
             <ul className='categories'>
+                {selectedRecipe === "" && 
+                <li key="all">
+                    <input type="radio" value="all" id="all" checked={"" === selectedType} onChange={() => {setSelectedType(""); setSelectedRecipe("");}}/>
+                    <label htmlFor="all"><img alt='Not Found' height="45" width="45" src="/images/AllRecipes.svg"/> <br/>All Categories</label>
+                </li>
+                }
+
                 {selectedRecipe === "" && recipeTypes.map((type) => {
                     return(
                         <li key={type}>
                             <input type="radio" value={type} id={type} checked={type === selectedType} onChange={(e) => {setSelectedType(e.target.value); setSelectedRecipe("");}}/>
-                            <label htmlFor={type}><img height="45" width="45" src={"/images/" + type + ".svg"}/> <br/> {type}</label>
+                            <label htmlFor={type}><img alt='Not Found' height="45" width="45" src={"/images/" + type + ".svg"}/> <br/> {type}</label>
                         </li>
                     )
                 })}
             </ul>
-            <div className="cancel">
-                {selectedRecipe === "" && selectedType && <button onClick={() => {setSelectedType(""); setSelectedRecipe("");}}>Reset Categories</button>}
-                {(selectedRecipe !== "" || allRecipes === false) && <button onClick={() => {setSelectedType(""); setSelectedRecipe(""); setAllRecipes(true)}}>All Recipes</button>}
-            </div>
+            
+                {(selectedRecipe !== "" || allRecipes === false) && <div className="cancel">
+                <button id='reset' onClick={() => {setSelectedType(""); setSelectedRecipe(""); setAllRecipes(true)}}></button>
+                <label htmlFor='reset'><br/>All Recipes</label>
+            </div>}
 
             {selectedRecipe === "" && <ul className="filtered-recipes">
                 {data.filter((recipe) => recipe.category.includes(selectedType)).map((recipe) => (

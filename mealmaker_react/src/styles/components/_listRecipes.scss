@@ -1,3 +1,19 @@
+.cancel {
+    position: relative;
+    display: inline-block;
+
+    button {
+        margin-left: 10px;
+        width: 47px;
+        height: 47px;
+        background: url(../../../public/images/Reset.svg) no-repeat;
+        background-size: 45px;
+        border: red 2px solid;
+    }
+}
+
+
+
 .categories {
     list-style-type: none;
     margin: 0;

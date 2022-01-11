@@ -67,7 +67,7 @@ const Ingredients = () => {
                     return (
                     <li key={cat}>
                         <input type="radio" value={cat} id={cat} checked={cat === category} onChange={(e) => {setCategory(e.target.value)}}/>
-                        <label htmlFor={cat}><img height="50" width="50" src={"/images/Ingredient_Type/" + cat + ".svg"}/> <br/> {cat}</label>
+                        <label htmlFor={cat}><img alt='Not Found' height="50" width="50" src={"/images/Ingredient_Type/" + cat + ".svg"}/> <br/> {cat}</label>
                     </li>
                     )
                 })}
