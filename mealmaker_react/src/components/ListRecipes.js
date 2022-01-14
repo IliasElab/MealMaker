@@ -46,22 +46,23 @@ const ListRecipes = () => {
                 })}
             </ul>
             
-                {(selectedRecipe !== "" || allRecipes === false) && <div className="cancel">
+                {(selectedRecipe === "" && allRecipes === false) && <div className="cancel">
                 <button id='reset' onClick={() => {setSelectedType(""); setSelectedRecipe(""); setAllRecipes(true)}}></button>
                 <label htmlFor='reset'><br/>All Recipes</label>
             </div>}
 
             {selectedRecipe === "" && <ul className="filtered-recipes">
                 {data.filter((recipe) => recipe.category.includes(selectedType)).map((recipe) => (
-                    <button className="recipe" key={recipe.title} onClick={() => {setSelectedRecipe(recipe._id); setSelectedType("recipe-selected");
+                    <button className="recipe" key={recipe.title} onClick={() => {setSelectedRecipe(recipe._id);
                     }}>{recipe.title}</button> 
                 ))}
             </ul>}
-
-            {selectedRecipe !== "" && <Recipe recipe={data.find((recipe) => recipe._id === selectedRecipe)} key={selectedRecipe}/>}
-
+            
+            {selectedRecipe !== "" && <div className="recipe-elements"> 
+                <button id='back-to-filtered' onClick={() => {setSelectedRecipe("");}}></button>
+                <Recipe recipe={data.find((recipe) => recipe._id === selectedRecipe)} key={selectedRecipe}/>
+            </div>}
         </div>
-        
     );
 };
 

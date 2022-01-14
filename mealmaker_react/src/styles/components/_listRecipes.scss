@@ -12,7 +12,16 @@
     }
 }
 
-
+.recipe-elements {
+    button {
+        margin-left: 10px;
+        width: 47px;
+        height: 47px;
+        background: url(../../../public/images/Previous.svg) no-repeat;
+        background-size: 45px;
+        border: none;
+    }
+}
 
 .categories {
     list-style-type: none;
