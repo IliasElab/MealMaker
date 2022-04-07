@@ -49,7 +49,7 @@ const listReducer = (state, action) => {
 
 const Ingredients = () => {
     const [data, setData] = useState([]);
-    const [category, setCategory] = useState('Herbs and Spices');
+    const [category, setCategory] = useState();
     const [selectedIngredient, dispatchSelectedIngredient] = useReducer(listReducer, []);
     let navigate = useNavigate();
 
@@ -62,18 +62,19 @@ const Ingredients = () => {
 
     return (
         <div className ='page-ingredients'>
-            <ul className='select-category'>
+            <div id='all-select-categories'>
                 {[...new Set(data.map(ingredient => ingredient.category))].map((cat) => {
                     return (
-                    <li key={cat}>
-                        <input type="radio" value={cat} id={cat} checked={cat === category} onChange={(e) => {setCategory(e.target.value)}}/>
-                        <label htmlFor={cat}><img alt='Not Found' height="50" width="50" src={"/images/Ingredient_Type/" + cat + ".svg"}/> <br/> {cat}</label>
-                    </li>
+                    <div className='select-category' key={cat}>
+                        <input type="radio" className='input-select-category' value={cat} id={cat} checked={cat === category} onChange={(e) => {setCategory(e.target.value)}}/>
+                        <label htmlFor={cat}><img alt='Not Found' height="50" width="50" src={"/images/Ingredient_Type/" + cat + ".svg"}/><br/>{cat}</label>        
+                    </div>
                     )
                 })}
-            </ul>
+            </div>
 
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+            
 
             <div className="selector-ingredients">
                 {data.filter((ingredient) => ingredient.category === category).map((ingredient) => (

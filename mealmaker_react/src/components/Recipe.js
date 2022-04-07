@@ -28,14 +28,14 @@ const Recipe = (props) => {
                 </ul>  
 
                 <h4>Preparation</h4>     
-                <ul>
+                <ol>
                     {recipe.step.split('.').map((step, i) => {
                         if (step.trim().length) {
                             return(<li key={"step" + i}>{step}</li>);
                         }
                         return "";
                     })}
-                </ul> 
+                </ol> 
                 <img src={"/images/" + recipe._id + ".jpg"} alt="No pictures available" height="400" width="400"/>   
             </div>
         </div>
