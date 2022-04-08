@@ -13,6 +13,7 @@
         padding: 2px;
         text-align: center;
         align-items:flex-end;
+        
 
         input {
             display: none;
@@ -20,6 +21,7 @@
 
         label {
             display: block;
+            transition: transform 0.3s;
         }
 
         input:checked + label {
@@ -27,8 +29,9 @@
         }
 
     }    
-    .select-category:hover{
-        background-color: rgb(212, 212, 212);
+    .select-category:hover > label{
+        cursor: pointer;
+        transform: scale(1.5);
     }
 }
 
@@ -40,23 +43,16 @@
         height: 2.6em;
         flex: 7%;
         flex-grow: 0;
-        background-color: rgba(7, 134, 7, 0.75);
+        background-color: rgba(64, 68, 64, 0.165);
         border: none;
         border-radius: 5px;
-        color: white;
         margin: 2px;
+        transition: transform 0.3s;
     }
-}
 
-.selected-ingredients {
-    button {
-        height: 25px;
-        width: 25px;
-        background-color: rgba(216, 28, 28, 0.774);
-        border: none;
-        border-radius: 5px;
-        color: white;
-        margin: 2px;
+    button:hover {
+        background-color: rgba(17, 132, 17, 0.641);
+        transform: scale(1.2);
     }
 }
 
@@ -80,4 +76,8 @@
         color: white;
         margin: 2px;
     }
+}
+
+#trash-can{
+    filter:brightness(0.75);
 }
