@@ -1,0 +1,27 @@
+.select-category {
+    display: block;
+    margin: 2px;
+    flex: 8%;
+    color: black;
+    padding: 2px;
+    text-align: center;
+    align-items:center;
+
+    input {
+        display: none;
+    }
+
+    label {
+        display: block;
+        transition: transform 0.3s;
+    }
+
+    input:checked + label {
+        background-color: rgba(21, 204, 36, 0.2);
+    }
+
+}    
+.select-category:hover > label{
+    cursor: pointer;
+    transform: scale(1.5);
+}
