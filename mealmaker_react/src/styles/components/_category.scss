@@ -12,16 +12,18 @@
     }
 
     label {
+        border-radius: 20px ;
         display: block;
         transition: transform 0.3s;
     }
 
     input:checked + label {
-        background-color: rgba(21, 204, 36, 0.2);
+        background-color: rgba(23, 169, 35, 0.615);
+        color : white;
     }
 
 }    
 .select-category:hover > label{
     cursor: pointer;
-    transform: scale(1.5);
+    transform: scale(1.4);
 }

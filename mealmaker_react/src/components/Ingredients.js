@@ -62,41 +62,40 @@ const Ingredients = () => {
     }, []);
 
     return (
-        <div className ='page-ingredients'>
-            <div id='all-select-categories'>
+        <div id ='page-ingredients'>
+            <div id='body-content'>
+                <div id='all-select-categories'>
+                    
+                    {[...new Set(data.map(ingredient => ingredient.category))].map((cat) => 
+                        <Category key={cat} category={cat} actual_category={category} change={setCategory} />
+                    )}
+
+                </div>
+
+                <div className="selector-ingredients">
+                    {data.filter((ingredient) => ingredient.category === category).map((ingredient) => {
+                        if (selectedIngredient.find((ing) => ing.id === ingredient.id)){
+                            return <button key={ingredient.name} className='btn-selected' onClick={() => dispatchSelectedIngredient({ type: 'REMOVE_ITEM', remove_id: ingredient.id })}>{ingredient.name}</button> 
+                        }
+                        else {
+                            return <button key={ingredient.name} className='btn-unselected' onClick={() => dispatchSelectedIngredient({ type: 'ADD_ITEM', ingredient: ingredient})}>{ingredient.name}</button> 
+                        }
+                    })}
+                </div>
+            </div>
+            
+            <div id='side-content' style={{display: selectedIngredient.length === 0 ? 'none' : ''}}>
+                <div className="selected-ingredients">
+                    {selectedIngredient.map((ingredient) =>
+                        <Ingredient key={ingredient.name} ingredient={ingredient} change={dispatchSelectedIngredient}/>
+                    )}
+                </div>
                 
-                {[...new Set(data.map(ingredient => ingredient.category))].map((cat) => 
-                    <Category key={cat} category={cat} actual_category={category} change={setCategory} />
-                )}
-
+                <div className="functionnal-btn">            
+                    {selectedIngredient.length !== 0 && <button onClick={() => dispatchSelectedIngredient({type: 'EMPTY_ITEM'})} className='delete-all'>Empty List</button>}
+                    {selectedIngredient.length !== 0 && selectedIngredient.every((ing) => !isNaN(ing.amount)) && (<button className='fit-recipes' onClick={() => navigate('/recipes', {state: selectedIngredient})}>Find Recipes</button>)}
+                </div>
             </div>
-
-            <div className="selector-ingredients">
-                {data.filter((ingredient) => ingredient.category === category).map((ingredient) => {
-                    if (selectedIngredient.find((ing) => ing.id === ingredient.id)){
-                        return <button key={ingredient.name} className='btn-selected' onClick={() => dispatchSelectedIngredient({ type: 'REMOVE_ITEM', remove_id: ingredient.id })}>{ingredient.name}</button> 
-                    }
-                    else {
-                        return <button key={ingredient.name} className='btn-unselected' onClick={() => dispatchSelectedIngredient({ type: 'ADD_ITEM', ingredient: ingredient})}>{ingredient.name}</button> 
-                    }
-                })}
-            </div>
-            
-            <div className="selected-ingredients">
-                {selectedIngredient.map((ingredient) =>
-                    <Ingredient key={ingredient.name} ingredient={ingredient} change={dispatchSelectedIngredient}/>
-                )}
-            </div>
-            
-            <div className="functionnal-btn">            
-                {selectedIngredient.length !== 0 && <button onClick={() => dispatchSelectedIngredient({type: 'EMPTY_ITEM'})} className='delete-all'>Empty List</button>}
-                {selectedIngredient.length !== 0 && selectedIngredient.every((ing) => !isNaN(ing.amount)) && (<button className='fit-recipes' onClick={() => navigate('/recipes', {state: selectedIngredient})}>Find Recipes</button>)}
-            </div>
-
-            <div id='Tips'>
-                <img id='trash-can' alt='Trash Can' height="50" width="50" src={"/images/Trash-Can2.svg"}/>
-            </div>
-
         </div>
     );
 };

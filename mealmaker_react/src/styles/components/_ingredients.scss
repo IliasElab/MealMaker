@@ -1,65 +1,101 @@
-#all-select-categories {
-    margin-bottom: 20px;
+#page-ingredients {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
-    align-content: flex-start;
-}
 
-.selector-ingredients {
-    display:flex;
-    flex-flow: row wrap;
+    #body-content{
+        flex-basis: 700px;
+        //flex-basis: 70%;
+        flex-grow: 5;
 
-    button {
-        cursor: pointer;
-        height: 2.6em;
-        flex: 7%;
-        flex-grow: 0;
-        border: none;
-        border-radius: 5px;
-        margin: 2px;
-        transition: transform 0.3s;
-    }
- 
-    .btn-selected {
-        background-color: rgba(38, 203, 38, 0.747);
-    }
-
-    .btn-selected:hover {
-        background-color: rgba(243, 25, 25, 0.646);
-        transform: scale(1.2);
-    }
-
-    .btn-unselected {
-        background-color: rgba(64, 68, 64, 0.165);
+        #all-select-categories {
+            margin: 20px;
+            display: flex;
+            flex-flow: row wrap;
+            row-gap: 10px;
+            justify-content: flex-start;
+            align-content: space-between;
+        }
         
+        .selector-ingredients {
+            display:flex;
+            flex-flow: row wrap;
+        
+            button {
+                cursor: pointer;
+                height: 2.6em;
+                flex: 7%;
+                flex-grow: 0;
+                border: none;
+                border-radius: 5px;
+                margin: 2px;
+                transition: transform 0.3s;
+            }
+         
+            .btn-selected {
+                background-color: rgba(38, 203, 38, 0.747);
+            }
+        
+            .btn-selected:hover {
+                background-color: rgba(243, 25, 25, 0.646);
+                transform: scale(1.2);
+            }
+        
+            .btn-unselected {
+                background-color: rgba(64, 68, 64, 0.165);
+                
+            }
+        
+            .btn-unselected:hover {
+                background-color: rgba(17, 132, 17, 0.641);
+                transform: scale(1.2);
+            }
+        }
     }
 
-    .btn-unselected:hover {
-        background-color: rgba(17, 132, 17, 0.641);
-        transform: scale(1.2);
-    }
-}
+    #side-content{
 
-.functionnal-btn {
-    .delete-all {
-        height: 25px;
-        width: 80px;
-        background-color: rgba(206, 11, 11, 0.89);
-        border: none;
-        border-radius: 5px;
-        color: white;
-        margin: 2px;
-    }
+        flex: auto;
 
-    .fit-recipes {
-        height: 25px;
-        width: 100px;
-        background-color: rgba(21, 204, 36, 0.815);
-        border: none;
-        border-radius: 5px;
-        color: white;
-        margin: 2px;
+        .selected-ingredients{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            gap: 5px;
+        }
+
+        @media only screen and (max-width: 1050px) and (min-width : 550px) {
+            .selected-ingredients{
+                display: grid;
+                grid-template-columns: 33% 33% 33%;
+                gap: 5px;
+            }
+        }
+
+        .selected-ingredient:only-child {
+            min-width: 200%;
+        }
+
+        .functionnal-btn {
+            .delete-all {
+                height: 25px;
+                width: 80px;
+                background-color: rgba(206, 11, 11, 0.89);
+                border: none;
+                border-radius: 5px;
+                color: white;
+                margin: 2px;
+            }
+        
+            .fit-recipes {
+                height: 25px;
+                width: 100px;
+                background-color: rgba(21, 204, 36, 0.815);
+                border: none;
+                border-radius: 5px;
+                color: white;
+                margin: 2px;
+            }
+        }
     }
 }
 
@@ -67,10 +103,4 @@
     filter:brightness(0.75);
 }
 
-@keyframes vibrate {
-    0% { transform: translateX(0) }
-    25% { transform: translateX(5px) }
-    50% { transform: translateX(-5px) }
-    75% { transform: translateX(5px) }
-    100% { transform: translateX(0) }
-}
+
