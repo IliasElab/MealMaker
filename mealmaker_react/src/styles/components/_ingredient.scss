@@ -8,8 +8,16 @@
         background-color: rgba(216, 28, 28, 0.774);
         border: none;
         border-radius: 5px;
-        color: white;
+        cursor: pointer;
         margin: 2px;
+        img {
+            align-items: center;
+        }
+    }
+
+    button:hover {
+        transform: scale(1.2);
+        transition: transform 0.2s;
     }
 
     .ingredient-amount {
