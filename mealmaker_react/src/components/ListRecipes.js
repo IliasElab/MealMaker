@@ -28,12 +28,12 @@ const ListRecipes = () => {
 
     return (
         <div className="list-recipes">
-            <ul className='categories'>
+            <ul className='recipes-categories'>
                 {selectedRecipe === "" && 
-                <li key="all">
-                    <input type="radio" value="all" id="all" checked={"" === selectedType} onChange={() => {setSelectedType(""); setSelectedRecipe("");}}/>
-                    <label htmlFor="all"><img alt='Not Found' height="45" width="45" src="/images/AllRecipes.svg"/> <br/>All Categories</label>
-                </li>
+                    <li key="all">
+                        <input type="radio" value="all" id="all" checked={"" === selectedType} onChange={() => {setSelectedType(""); setSelectedRecipe("");}}/>
+                        <label htmlFor="all"><img alt='Not Found' height="45" width="45" src="/images/AllRecipes.svg"/> <br/>All Categories</label>
+                    </li>
                 }
 
                 {selectedRecipe === "" && recipeTypes.map((type) => {

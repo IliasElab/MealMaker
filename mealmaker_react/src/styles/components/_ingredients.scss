@@ -60,6 +60,7 @@
 
     #side-content{
         flex: auto;
+        margin-left: 10px;
 
         .selected-ingredients{
             display: grid;
@@ -67,11 +68,9 @@
             gap: 5px;
         }
 
-        @media only screen and (max-width: 1050px) and (min-width : 550px) {
+        @media only screen and (max-width: 1000px) and (min-width : 550px) {
             .selected-ingredients{
-                display: grid;
                 grid-template-columns: 33% 33% 33%;
-                gap: 5px;
             }
         }
 

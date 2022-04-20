@@ -8,7 +8,7 @@
         height: 47px;
         background: url(../../../public/images/Reset.svg) no-repeat;
         background-size: 45px;
-        border: red 2px solid;
+        border: red 2px solid;  
     }
 }
 
@@ -21,27 +21,6 @@
         background: url(../../../public/images/Previous.svg) no-repeat;
         background-size: 45px;
         border: none;
-    }
-}
-
-.categories {
-    list-style-type: none;
-    margin: 0;
-    margin-bottom: 10px;
-    padding: 0;
-    overflow: hidden;
-    background-color: #090c3593;
-
-    li {
-        float: left;
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 16px;
-        text-decoration: none;
-
-        input {
-            display: none !important;
-        }
+        cursor: pointer;
     }
 }
